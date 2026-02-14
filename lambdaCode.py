@@ -81,7 +81,7 @@ def lambda_handler(event, context):
             Params={'Bucket': BUCKET, 'Key': s3_key},
             ExpiresIn=3600
         )
-	print(url)
+        print(url)
         print("This is the final commit")
         return {
             'statusCode': 200,
