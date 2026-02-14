@@ -39,7 +39,7 @@ def lambda_handler(event, context):
         # Step 1: Generate Tamil fact
         print("📝 Generating Tamil tech fact...")
         facts = generate_tamil_fact()
-        print(f"✅ Fact: {facts}")
+        print(f" Fact: {facts}")
         # facts should be list[str]
         if not isinstance(facts, list):
             facts = []
@@ -56,35 +56,33 @@ def lambda_handler(event, context):
         print("🎤 Generating Tamil voice...")
         audio_path = generate_voice(voice_text, job_id)
         # audio_duration = get_audio_duration(audio_path)
-        # print(f"✅ Audio: {audio_duration}s")
+        # print(f"Audio: {audio_duration}s")
         
         # Step 3: Generate background image
         print("🎨 Generating background image...")
         bg_path = generate_background(job_id)
-        print(f"✅ Background created")
+        print(f"Background created")
         
         # Step 4: Create text overlay
-        print("✍️ Creating text overlay...")
+        print("Creating text overlay...")
         overlay_path = create_text_overlay(overlay_text, job_id)
-        print(f"✅ Overlay created")
+        print(f"Overlay created")
         
-        # Step 5: Compose video
         print("🎥 Composing video...")
         video_path = compose_video(bg_path, overlay_path, audio_path, 30, job_id)
-        print(f"✅ Video created")
+        print(f"Video created")
         
-        # Step 6: Upload to S3
-        print("☁️ Uploading to S3...")
+        print("Uploading to S3...")
         s3_key = upload_to_s3(video_path, job_id, facts)
-        print(f"✅ Uploaded: s3://{BUCKET}/{s3_key}")
+        print(f"Uploaded: s3://{BUCKET}/{s3_key}")
         
-        # Generate presigned URL
         url = s3.generate_presigned_url(
             'get_object',
             Params={'Bucket': BUCKET, 'Key': s3_key},
             ExpiresIn=3600
         )
-        
+	print(url)
+        print("This is the final commit")
         return {
             'statusCode': 200,
             'body': json.dumps({
